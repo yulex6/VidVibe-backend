@@ -1,9 +1,15 @@
+package com.example.vidvibebackend.Controller;
+
+import com.example.vidvibebackend.Entity.User;
+import com.example.vidvibebackend.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.Set;
 
+/**
+ * @author Zhenliang Yu
+ */
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -39,12 +45,12 @@ public class UserController {
     @GetMapping("/{userId}/followers")
     public Set<User> getFollowers(@PathVariable("userId") Integer userId) {
         User user = userService.getUserById(userId);
-        return userService.getFollowersOfUser(user);
+        return userService.getFollowersOfUser(user.getUserId());
     }
 
     @GetMapping("/{userId}/following")
     public Set<User> getFollowing(@PathVariable("userId") Integer userId) {
-        User user = userService.getUserById(userId);
-        return userService.getFollowingOfUser(user);
+
+        return userService.getFollowingOfUser(userId);
     }
 }

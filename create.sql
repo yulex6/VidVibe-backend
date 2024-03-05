@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS UserVideoInteraction (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
     video_id INT,
-    interaction_score DECIMAL(10,2), -- 假设存储一个介于0到1之间的评分或权重
+    interaction_score INT,
     FOREIGN KEY (user_id) REFERENCES Users(user_id),
     FOREIGN KEY (video_id) REFERENCES Videos(video_id)
 );
