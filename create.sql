@@ -23,8 +23,8 @@ CREATE TABLE IF NOT EXISTS Videos (
     upload_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     views_count BIGINT DEFAULT 0,
     likes_count BIGINT DEFAULT 0,
-    -- 关联标签表（假设每个视频可以有多个标签）
-    -- 实际上会使用中间表关联，这里简化处理
+    collect_count BIGINT DEFAULT 0,
+    comment_count BIGINT DEFAULT 0,
     tags TEXT
 );
 
@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS UserBehavior (
     behavior_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
     video_id INT,
-    action_type ENUM('view', 'like', 'share', 'comment'), -- 或者使用其他枚举类型
+    action_type ENUM('view', 'like', 'share', 'comment','collect'), -- 或者使用其他枚举类型
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES Users(user_id),
     FOREIGN KEY (video_id) REFERENCES Videos(video_id)
@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS UserVideoInteraction (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
     video_id INT,
-    interaction_score INT,
+    interaction_score DECIMAL(10,2),
     FOREIGN KEY (user_id) REFERENCES Users(user_id),
     FOREIGN KEY (video_id) REFERENCES Videos(video_id)
 );

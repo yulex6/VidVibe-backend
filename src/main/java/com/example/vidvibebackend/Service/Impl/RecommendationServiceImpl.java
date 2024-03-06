@@ -8,6 +8,9 @@ import java.util.List;
 
 
 
+/**
+ * @author Zhenliang Yu
+ */
 @Service
 public class RecommendationServiceImpl implements RecommendationService {
     @Override

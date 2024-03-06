@@ -38,6 +38,9 @@ public class Video {
 
     private Long likesCount;
 
+    private Long collectsCount;
+    private Long commentsCount;
+
     // 多对多关系 - 视频与标签（通过中间表VideoTags）
     @ManyToMany(mappedBy = "videos", cascade = CascadeType.ALL)
     private Set<Tag> tags;
@@ -45,7 +48,7 @@ public class Video {
     public Video() {
     }
 
-    public Video(Integer videoId, String title, String description, Integer duration, Date uploadTime, Long viewsCount, Long likesCount, Set<Tag> tags) {
+    public Video(Integer videoId, String title, String description, Integer duration, Date uploadTime, Long viewsCount, Long likesCount, Long collectsCount, Long commentsCount, Set<Tag> tags) {
         this.videoId = videoId;
         this.title = title;
         this.description = description;
@@ -53,6 +56,8 @@ public class Video {
         this.uploadTime = uploadTime;
         this.viewsCount = viewsCount;
         this.likesCount = likesCount;
+        this.collectsCount = collectsCount;
+        this.commentsCount = commentsCount;
         this.tags = tags;
     }
 
@@ -65,12 +70,12 @@ public class Video {
             return false;
         }
         Video video = (Video) o;
-        return Objects.equals(videoId, video.videoId) && Objects.equals(title, video.title) && Objects.equals(description, video.description) && Objects.equals(duration, video.duration) && Objects.equals(uploadTime, video.uploadTime) && Objects.equals(viewsCount, video.viewsCount) && Objects.equals(likesCount, video.likesCount) && Objects.equals(tags, video.tags);
+        return Objects.equals(videoId, video.videoId) && Objects.equals(title, video.title) && Objects.equals(description, video.description) && Objects.equals(duration, video.duration) && Objects.equals(uploadTime, video.uploadTime) && Objects.equals(viewsCount, video.viewsCount) && Objects.equals(likesCount, video.likesCount) && Objects.equals(collectsCount, video.collectsCount) && Objects.equals(commentsCount, video.commentsCount) && Objects.equals(tags, video.tags);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(videoId, title, description, duration, uploadTime, viewsCount, likesCount, tags);
+        return Objects.hash(videoId, title, description, duration, uploadTime, viewsCount, likesCount, collectsCount, commentsCount, tags);
     }
 
     @Override
@@ -83,6 +88,8 @@ public class Video {
                 ", uploadTime=" + uploadTime +
                 ", viewsCount=" + viewsCount +
                 ", likesCount=" + likesCount +
+                ", collectsCount=" + collectsCount +
+                ", commentsCount=" + commentsCount +
                 ", tags=" + tags +
                 '}';
     }

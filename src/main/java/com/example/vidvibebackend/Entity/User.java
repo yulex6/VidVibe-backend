@@ -23,6 +23,10 @@ public class User {
     @Column(nullable = false, length = 255)
     private String username;
 
+    @Column(nullable = false)
+    private String password;
+
+
     @Column(columnDefinition = "TEXT")
     private String profileInfo;
 
@@ -46,6 +50,15 @@ public class User {
     )
     private Set<User> following;
 
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+        name = "user_roles",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+   private Set<Role> roles;
+
     public User() {
     }
 
@@ -54,56 +67,27 @@ public class User {
         return "User{" +
                 "userId=" + userId +
                 ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
                 ", profileInfo='" + profileInfo + '\'' +
                 ", preferences='" + preferences + '\'' +
                 ", createdAt=" + createdAt +
                 ", behaviors=" + behaviors +
                 ", following=" + following +
+                ", roles=" + roles +
                 '}';
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-
-        if (!Objects.equals(userId, user.userId)) {
-            return false;
-        }
-        if (!Objects.equals(username, user.username)) {
-            return false;
-        }
-        if (!Objects.equals(profileInfo, user.profileInfo)) {
-            return false;
-        }
-        if (!Objects.equals(preferences, user.preferences)) {
-            return false;
-        }
-        if (!Objects.equals(createdAt, user.createdAt)) {
-            return false;
-        }
-        if (!Objects.equals(behaviors, user.behaviors)) {
-            return false;
-        }
-        return Objects.equals(following, user.following);
+        return Objects.equals(userId, user.userId) && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(profileInfo, user.profileInfo) && Objects.equals(preferences, user.preferences) && Objects.equals(createdAt, user.createdAt) && Objects.equals(behaviors, user.behaviors) && Objects.equals(following, user.following) && Objects.equals(roles, user.roles);
     }
 
     @Override
     public int hashCode() {
-        int result = userId != null ? userId.hashCode() : 0;
-        result = 31 * result + (username != null ? username.hashCode() : 0);
-        result = 31 * result + (profileInfo != null ? profileInfo.hashCode() : 0);
-        result = 31 * result + (preferences != null ? preferences.hashCode() : 0);
-        result = 31 * result + (createdAt != null ? createdAt.hashCode() : 0);
-        result = 31 * result + (behaviors != null ? behaviors.hashCode() : 0);
-        result = 31 * result + (following != null ? following.hashCode() : 0);
-        return result;
+        return Objects.hash(userId, username, password, profileInfo, preferences, createdAt, behaviors, following, roles);
     }
 }
 
